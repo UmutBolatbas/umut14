@@ -1,0 +1,42 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class topzıplatma : MonoBehaviour
+{
+    public bool topDead;
+    Rigidbody2D rb2D;
+    public float zıplamagücü;
+    public bool topYerde;
+    public int zıplamaHakkı;
+    void Start()
+    {
+        rb2D = GetComponent<Rigidbody2D>();
+        zıplamaHakkı = 2;
+    }
+
+
+    void Update()
+    {
+        if(Input.GetMouseButtonDown(0) && (topYerde == true || zıplamaHakkı >0))
+        {
+            Zıpla();
+        }
+    }
+    void Zıpla()
+    {
+        rb2D.AddForce(Vector2.up * zıplamagücü *100);
+        topYerde = false;
+        zıplamaHakkı -= 1;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision) 
+    {
+        if(collision.gameObject.name=="zemin")
+        {
+            topYerde = true;
+            zıplamaHakkı = 2;
+        }
+    }
+
+}
