@@ -1,0 +1,34 @@
+import quantconnect as qc
+
+
+class MyStrategy(qc.QCAlgorithm):
+
+    def Initialize(self):
+        self.SetStartDate(2020, 1, 1)  # Set the start date for the backtest
+        self.SetEndDate(2021, 1, 1)  # Set the end date for the backtest
+        self.SetCash(100000)  # Set the initial cash balance
+
+        self.symbol = self.AddEquity("AAPL", Resolution.Daily).Symbol  # Add the asset to the algorithm
+
+    def OnData(self, data):
+        if not self.Portfolio.Invested:  # Buy the asset if not already invested
+            self.SetHoldings(self.symbol, 1)
+
+
+import quantconnect as qc
+
+
+class MyStrategy(qc.QCAlgorithm):
+
+    def Initialize(self):
+        self.SetStartDate(2020, 1, 1)  # Set the start date for the backtest
+        self.SetEndDate(2021, 1, 1)  # Set the end date for the backtest
+        self.SetCash(100000)  # Set the initial cash balance
+
+        self.symbol1 = self.AddEquity("AAPL", Resolution.Daily).Symbol  # Add the first asset to the algorithm
+        self.symbol2 = self.AddEquity("GOOG", Resolution.Daily).Symbol  # Add the second asset to the algorithm
+
+    def OnData(self, data):
+        if not self.Portfolio.Invested:  # Buy the first asset long and the second asset short if not already invested
+            self.SetHoldings(self.symbol1, 0.5)
+            self.SetHoldings(self.symbol2, -0.5)
